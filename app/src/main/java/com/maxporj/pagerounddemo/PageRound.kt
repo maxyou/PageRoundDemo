@@ -1,12 +1,12 @@
 package com.maxporj.pagerounddemo
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import kotlin.math.ceil
 
 @Composable
@@ -20,20 +20,19 @@ fun PageRound(
     RoundInterval: @Composable () -> Unit,
 ) {
 
-    var maxRight = ceil(totalDocs.toDouble() / pageSize.toDouble())
+    val maxRight = ceil(totalDocs.toDouble() / pageSize.toDouble())
     val maxRightInt = maxRight.toInt()
 
     val ba = calcPaginateArray(current = current, ext = ext, maxRight = maxRightInt)
 
     Row(
-        modifier = Modifier
-//            .fillMaxSize()
-            .background(Color(0xff88cccc)),
+        modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceEvenly
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
 
-        val modifier = Modifier.widthIn(min = 30.dp, max = 40.dp)//.weight(1f)
+//        val modifier = Modifier.width(0.dp).weight(1f)
+        val modifier = Modifier.weight(1f)
 
         if (ba[0] != 1) {
             Box(modifier = modifier) { RoundButton(1, 1 == current, onClick) }
@@ -77,7 +76,7 @@ fun calcPaginateArray(current: Int, ext: Int, maxRight: Int): MutableList<Int> {
     for (i in 0 until ext) {
         ba.add(0, (current - 1) - i)
     }
-    // console.log(ba)
+
     while (true) {
         if (ba[0] < 1) {
             ba.removeFirstOrNull()
@@ -89,7 +88,7 @@ fun calcPaginateArray(current: Int, ext: Int, maxRight: Int): MutableList<Int> {
             break
         }
     }
-    // console.log(ba)
+
     while (true) {
         if (ba[ba.size - 1] > maxRight) {
             ba.removeLastOrNull()
@@ -101,6 +100,6 @@ fun calcPaginateArray(current: Int, ext: Int, maxRight: Int): MutableList<Int> {
             break
         }
     }
-    // console.log(ba)
+
     return ba
 }
