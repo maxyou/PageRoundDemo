@@ -11,6 +11,8 @@ You can copy the PageRound.kt file directly to your project directory. Currently
 You need to define your favorite button and spacer pattern, and then pass to the PageRound(), very simple. App.kt is an example.
 
 
+https://user-images.githubusercontent.com/1485628/150663387-610d171a-c46d-4af2-b316-81403200354f.mp4
+
 
 # License
 MIT
