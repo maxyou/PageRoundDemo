@@ -21,7 +21,7 @@ fun PageRound(
 ) {
 
     val _ext = if (ext < 1) 2 else ext
-    val _pageSize = if (pageSize < 1) 3 else pageSize
+    val _pageSize = if (pageSize < 1) 10 else pageSize
 
     val maxRight = ceil(totalDocs.toDouble() / _pageSize.toDouble())
     val maxRightInt = maxRight.toInt()
