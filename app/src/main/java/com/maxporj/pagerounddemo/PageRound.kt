@@ -20,10 +20,16 @@ fun PageRound(
     RoundInterval: @Composable () -> Unit,
 ) {
 
-    val maxRight = ceil(totalDocs.toDouble() / pageSize.toDouble())
+    val _ext = if (ext < 1) 2 else ext
+    val _pageSize = if (pageSize < 1) 3 else pageSize
+
+    val maxRight = ceil(totalDocs.toDouble() / _pageSize.toDouble())
     val maxRightInt = maxRight.toInt()
 
-    val ba = calcPaginateArray(current = current, ext = ext, maxRight = maxRightInt)
+    val _maxRightInt = if(maxRightInt < 1) 1 else maxRightInt
+    val _current = if (current < 1) 1 else if (current > _maxRightInt) _maxRightInt else current
+
+    val ba = calcPaginateArray(current = _current, ext = _ext, maxRight = _maxRightInt)
 
     Row(
         modifier = Modifier.fillMaxSize(),
@@ -35,7 +41,7 @@ fun PageRound(
         val modifier = Modifier.weight(1f)
 
         if (ba[0] != 1) {
-            Box(modifier = modifier) { RoundButton(1, 1 == current, onClick) }
+            Box(modifier = modifier) { RoundButton(1, 1 == _current, onClick) }
             if (ba[0] != 2) {
                 Box(modifier = modifier) { RoundInterval() }
             }
@@ -45,20 +51,20 @@ fun PageRound(
             Box(modifier = modifier) {
                 RoundButton(
                     it,
-                    it == current,
+                    it == _current,
                     onClick
                 )
             }
         }
 
-        if (ba[ba.size - 1] != maxRightInt) {
-            if (ba[ba.size - 1] != maxRightInt - 1) {
+        if (ba[ba.size - 1] != _maxRightInt) {
+            if (ba[ba.size - 1] != _maxRightInt - 1) {
                 Box(modifier = modifier) { RoundInterval() }
             }
             Box(modifier = modifier) {
                 RoundButton(
-                    maxRightInt,
-                    maxRightInt == current,
+                    _maxRightInt,
+                    _maxRightInt == _current,
                     onClick
                 )
             }
